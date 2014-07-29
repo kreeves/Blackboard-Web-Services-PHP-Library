@@ -1,0 +1,25 @@
+{
+    "name": "jon-gonzalez/blackboard-web-services-php-library",
+    "type": "library",
+    "description": "Client library for library for Blackboard SOAP Web Services",
+    "keywords": ["blackboard"],
+    "homepage": "",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.2.1"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "classmap": [
+            "services/"
+        ]
+    },
+    "include-path": ["services/"],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
