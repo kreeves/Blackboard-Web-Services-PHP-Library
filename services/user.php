@@ -26,7 +26,7 @@ class User extends Service {
 	}
 	
 	public function __call($method, $args = null) {
-		return parent::buildBody($method, 'User', $args[0]);
+		return parent::buildBodyUser($method, 'User', $args[0]);
 	}
 }
 

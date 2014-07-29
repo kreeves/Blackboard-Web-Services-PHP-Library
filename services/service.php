@@ -40,5 +40,34 @@ class Service {
 		
 		return $body;
 	}
+
+	public function buildBodyUser($method = null, $service, $args = null) {
+        $service = strtolower($service);
+        $body = '<SOAP-ENV:Body xmlns:ns1="http://' . strtolower($service) . '.ws.blackboard">';
+        $body .= '<ns3:' . $method . ' xmlns="http://ws.platform.blackboard/xsd" xmlns:ns2="http://' . strtolower($service) . '.ws.blackboard/xsd" xmlns:ns3="http://' . strtolower($service) . '.ws.blackboard">';
+        $body .= "<ns3:$service>";
+        if (!is_array($args) && is_string($args) && $args != null) {
+            $body .= $args;
+        } else {
+            if ($args != null) {
+                foreach($args as $key => $arg) {
+                    if (is_array($arg)) {
+                        $body .= "<ns2:$key>";
+                        foreach($arg as $subkey => $sub_arg) {
+                            $body .= "<ns2:$subkey>$sub_arg</ns2:$subkey>";
+                        }
+                        $body .= "</ns2:$key>";
+                    } else {
+                        $body .= "<ns2:$key>$arg</ns2:$key>";
+                    }
+                }
+            }
+        }
+        $body .= "</ns3:$service>";
+        $body .= "</ns3:$method>";
+        $body .= '</SOAP-ENV:Body>';
+
+        return $body;
+    }
 }
 ?>
