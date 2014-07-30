@@ -32,7 +32,7 @@ class BbPhp {
 	}
 	
 	private function buildHeader() {
-		$stamp = gmdate("Y-m-d\TH:i:s\Z");
+		$stamp = gmdate('Y-m-d\TH:i:s\Z');
 		
 		if ($this->session_id == null) {
 			$password = 'nosession';
