@@ -83,7 +83,7 @@ END;
 		if (!isset($args[1])) {
 			$args[1] = null;
 		}
-		
+
 		if (in_array($method, $this->services)) {
 			return $this->doCall($args[0], $method, $args[1]);
 		} else {
@@ -92,7 +92,6 @@ END;
 	}
 	
 	public function doCall($method = null, $service = "Context", $args = null) {
-		
 		$request = $this->buildRequest($method, $service, $args);
 
 		if ($this->use_curl) {
@@ -105,11 +104,12 @@ END;
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			
 			$result = curl_exec($ch);
+
 			curl_close($ch);	
 		} else {
 			$result = $this->doPostRequest($this->url . '/webapps/ws/services/' . $service . '.WS', $request, "Content-type: text/xml; charset=utf-8\nSOAPAction: \"" . $method . "\"");
 		}
-		
+
 		$result_array = $this->xmlstr_to_array($result);
 
 		$final_result = (isset($result_array['Body'][$method . 'Response']['return'])) ? $result_array['Body'][$method . 'Response']['return'] : null;
