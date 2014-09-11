@@ -32,8 +32,9 @@ class BbPhp {
 	}
 	
 	private function buildHeader() {
-		$stamp = gmdate('Y-m-d\TH:i:s\Z');
-		
+		$stamp = gmdate('Y-m-d\TH:i:s\Z', time());
+        $stampExpire = gmdate('Y-m-d\TH:i:s\Z', time() + 2);
+
 		if ($this->session_id == null) {
 			$password = 'nosession';
 		} else {
@@ -50,6 +51,7 @@ class BbPhp {
 	        <wsse:Security SOAP-ENV:mustunderstand="true" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
 	            <wsse:Timestamp xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
 	                <wsse:Created xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">$stamp</wsse:Created>
+	                <wsse:Expires xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">$stampExpire</wsse:Expires>
 	            </wsse:Timestamp>
 	            <wsse:UsernameToken xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
 	                <wsse:Username xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">session</wsse:Username>

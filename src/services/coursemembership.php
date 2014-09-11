@@ -24,7 +24,21 @@ class CourseMembership extends Service {
 		$body .= '</ns1:f>';		
 		
 		return parent::buildBody("getCourseMembership", "CourseMembership", $body);
-	}	
+	}
+
+    public function saveCourseMembership($args) {
+        $body = '<ns2:courseId>' . $args['courseId'] . '</ns2:courseId>';
+
+        foreach ($args['CourseMembers'] as $cs) {
+            $body .= '<ns2:cmArray>';
+            foreach ($cs as $key => $arg) {
+                $body .= '<ns3:' . $key . '>' . $arg . '</ns3:' . $key . '>';
+            }
+            $body .= '</ns2:cmArray>';
+        }
+
+        return parent::buildBodyCourseMembership("saveCourseMembership", "CourseMembership", $body);
+    }
 	
 	public function __call($method, $args = null) {
 		return parent::buildBody($method, 'CourseMembership', $args[0]);
