@@ -30,6 +30,16 @@ class BbPhp {
 		$this->use_curl = $use_curl;
 		$this->session_id = $this->Context("initialize");
 	}
+
+    public function getSessionId()
+    {
+        return $this->session_id;
+    }
+
+    public function setSessionId($session)
+    {
+        $this->session_id = $session;
+    }
 	
 	private function buildHeader() {
 		$stamp = gmdate('Y-m-d\TH:i:s\Z', time());
@@ -113,8 +123,15 @@ END;
 		}
 
 		$result_array = $this->xmlstr_to_array($result);
+var_dump($method);
+        if ($method == "loginTool") {
+            var_dump($result_array);
+            $final_result = (isset($result_array['Body'][$method . 'Response']['return'])) ? $result_array['Body'][$method . 'Response']['return'] : $result_array;
+        } else {
+            $final_result = (isset($result_array['Body'][$method . 'Response']['return'])) ? $result_array['Body'][$method . 'Response']['return'] : null;
+        }
 
-		$final_result = (isset($result_array['Body'][$method . 'Response']['return'])) ? $result_array['Body'][$method . 'Response']['return'] : null;
+
 		return $final_result;
 	}	
 	
