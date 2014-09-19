@@ -122,7 +122,6 @@ END;
 
 		$result_array = $this->xmlstr_to_array($result);
         if ($method == "loginTool") {
-            var_dump($result_array);
             $final_result = (isset($result_array['Body'][$method . 'Response']['return'])) ? $result_array['Body'][$method . 'Response']['return'] : $result_array;
         } else {
             $final_result = (isset($result_array['Body'][$method . 'Response']['return'])) ? $result_array['Body'][$method . 'Response']['return'] : null;
