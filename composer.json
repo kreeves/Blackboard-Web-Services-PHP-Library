@@ -1,5 +1,5 @@
 {
-    "name": "jon-gonzalez/blackboard-web-services-php-library",
+    "name": "kreeves/blackboard-web-services-php-library",
     "type": "library",
     "description": "Client library for library for Blackboard SOAP Web Services",
     "keywords": ["blackboard"],
