@@ -156,7 +156,7 @@ END;
 	}	
 
 	function xmlstr_to_array($xmlstr) {
-		$doc = new DOMDocument();
+		$doc = new \DOMDocument();
 		$doc->loadXML($xmlstr);
 		return $this->domnode_to_array($doc->documentElement);
 	}
