@@ -42,7 +42,7 @@ class BbPhp {
     }
 	
 	private function buildHeader() {
-		$stamp = gmdate('Y-m-d\TH:i:s\Z', time());
+		$stamp = \gmdate('Y-m-d\TH:i:s\Z', time());
 
 		if ($this->session_id == null) {
 			$password = 'nosession';
@@ -94,7 +94,7 @@ END;
 			$args[1] = null;
 		}
 
-		if (in_array($method, $this->services)) {
+		if (\in_array($method, $this->services)) {
 			return $this->doCall($args[0], $method, $args[1]);
 		} else {
 			return $this->doCall($method, $args[0], $args[1]);
@@ -105,17 +105,17 @@ END;
 		$request = $this->buildRequest($method, $service, $args);
 
 		if ($this->use_curl) {
-			$ch = curl_init();
+			$ch = \curl_init();
 				
-			curl_setopt($ch, CURLOPT_URL, $this->url . '/webapps/ws/services/' . $service . '.WS');
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset=utf-8', 'SOAPAction: "' . $method . '"'));
-			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			\curl_setopt($ch, CURLOPT_URL, $this->url . '/webapps/ws/services/' . $service . '.WS');
+			\curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset=utf-8', 'SOAPAction: "' . $method . '"'));
+			\curl_setopt($ch, CURLOPT_POST, 1);
+			\curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+			\curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			
-			$result = curl_exec($ch);
+			$result = \curl_exec($ch);
 
-			curl_close($ch);	
+			\curl_close($ch);
 		} else {
 			$result = $this->doPostRequest($this->url . '/webapps/ws/services/' . $service . '.WS', $request, "Content-type: text/xml; charset=utf-8\nSOAPAction: \"" . $method . "\"");
 		}
@@ -143,14 +143,14 @@ END;
 		if ($optional_headers !== null) {
 			$params['http']['header'] = $optional_headers;
 		}
-		$ctx = stream_context_create($params);
+		$ctx = \stream_context_create($params);
 		$fp = @fopen($url, 'rb', false, $ctx);
 		if (!$fp) {
-			throw new Exception("Problem with $url, $php_errormsg");
+			throw new \Exception("Problem with $url, $php_errormsg");
 		}
 		$response = @stream_get_contents($fp);
 		if ($response === false) {
-			throw new Exception("Problem reading data from $url, $php_errormsg");
+			throw new \Exception("Problem reading data from $url, $php_errormsg");
 		}
 		return $response;
 	}	
@@ -175,7 +175,7 @@ END;
 					$v = $this->domnode_to_array($child);
 					if(isset($child->tagName)) {
 						$t = $child->tagName;
-						if (strpos($t, ':') !== false) {
+						if (\strpos($t, ':') !== false) {
 							$temp = explode(':', $t);
 							$key = $temp[1];
 						} else {
@@ -191,7 +191,7 @@ END;
 					}
 				}	
 
-				if(is_array($output)) {
+				if(\is_array($output)) {
 					if($node->attributes->length) {
 						$a = array();
 						foreach($node->attributes as $attrName => $attrNode) {
@@ -200,7 +200,7 @@ END;
 						$output['@attributes'] = $a;
 					}
 					foreach ($output as $t => $v) {
-						if(is_array($v) && count($v)==1 && $t!='@attributes') {
+						if(\is_array($v) && \count($v)==1 && $t!='@attributes') {
 							$output[$t] = $v[0];
 						}
 					}
